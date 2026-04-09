@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toggle Components</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --off-track: #3b4252;
+      --on-track: #12a4ff;
+      --thumb: #ffffff;
+      --glow: rgba(18, 164, 255, 0.28);
+      --text: #f5f7fb;
+      --muted: #9aa4b2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        var(--bg);
+      background-size: 28px 28px, 28px 28px, auto;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      padding: 24px;
+    }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .label {
+      min-width: 36px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .switch {
+      position: relative;
+      width: 76px;
+      height: 42px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--off-track);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      left: 4px;
+      top: 4px;
+      background: var(--thumb);
+      border-radius: 50%;
+      transition: transform 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+    }
+
+    .switch input:checked + .slider {
+      background: var(--on-track);
+      box-shadow: 0 0 0 6px var(--glow);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(34px);
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="toggle-row">
+      <span class="label" id="labelOne">On</span>
+      <label class="switch">
+        <input type="checkbox" id="toggleOne" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <span class="label" id="labelTwo">Off</span>
+      <label class="switch">
+        <input type="checkbox" id="toggleTwo" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </main>
+
+  <script>
+    const pairs = [
+      ["toggleOne", "labelOne"],
+      ["toggleTwo", "labelTwo"]
+    ];
+
+    pairs.forEach(([toggleId, labelId]) => {
+      const toggle = document.getElementById(toggleId);
+      const label = document.getElementById(labelId);
+
+      function sync() {
+        label.textContent = toggle.checked ? "On" : "Off";
+      }
+
+      toggle.addEventListener("change", sync);
+      sync();
+    });
+  </script>
+</body>
+</html>
