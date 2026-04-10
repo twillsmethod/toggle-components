@@ -4,7 +4,7 @@ A minimal UI component study focused on simple on/off interaction.
 
 ## Preview
 
-![Toggle Preview](toggle-preview.gif)
+![Toggle Preview](toggle.gif)
 
 ## What this demonstrates
 
